@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/main">
+
+
+    <fragment
+        android:id="@+id/main"
+        android:name="com.recipe.kchinnak.searchrecipe.MainFragment"
+        android:label="MainFragment">
+        <action
+            android:id="@+id/action_mainFragment_to_secondFragment"
+            app:destination="@id/signupFragment"
+            app:enterAnim="@anim/translate_in_up"
+            app:exitAnim="@anim/translate_out_up"
+            app:popEnterAnim="@anim/translate_in_down"
+            app:popExitAnim="@anim/translate_out_down" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/signupFragment"
+        android:name="com.recipe.kchinnak.searchrecipe.fragments.SignupFragment"
+        android:label="SecondFragment" />
+
+</navigation>

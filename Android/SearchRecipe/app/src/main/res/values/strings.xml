@@ -1,8 +1,17 @@
 <resources>
     <string name="app_name">SearchRecipe</string>
 
-    <!-- Login Screen -->
+    <!-- Login and SignUp Screens -->
     <string name="login_button">login</string>
     <string name="signup_button">Register</string>
-    <string name="register_button">Sign Up</string>
+    <string name="register_button_string">Sign Up</string>
+    <string name="email_hint">email</string>
+    <string name="password_hint">password</string>
+    <string name="verify_email_button">Verify</string>
+    <string name="verify_email_sign_out_button">SignOut</string>
+    <string name="verify_email_dialog_title">Email Verification</string>
+    <string name="email_verification_sent_toast">Verification email sent to : </string>
+    <string name="email_verification_notsent_toast">Unable to send verification email</string>
+    <string name="blank_email_password">Email and Password cannot be blank</string>
+    <string name="user_profile_error">Something is wrong</string>
 </resources>

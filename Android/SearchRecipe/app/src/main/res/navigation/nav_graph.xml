@@ -17,8 +17,8 @@
             app:popEnterAnim="@anim/translate_in_down"
             app:popExitAnim="@anim/translate_out_down" />
         <action
-            android:id="@+id/action_main_to_homeFragment"
-            app:destination="@id/home_fragment" />
+            android:id="@+id/action_main_to_homeActivity2"
+            app:destination="@id/homeActivity" />
 
     </fragment>
 
@@ -30,10 +30,10 @@
             android:id="@+id/action_signupFragment_to_main"
             app:destination="@id/main" />
     </fragment>
-    <fragment
-        android:id="@+id/home_fragment"
-        android:name="com.recipe.kchinnak.searchrecipe.fragments.HomeFragment"
-        android:label="home_fragment"
-        tools:layout="@layout/home_fragment" />
+    <activity
+        android:id="@+id/homeActivity"
+        android:name="com.recipe.kchinnak.searchrecipe.HomeActivity"
+        android:label="content_home"
+        tools:layout="@layout/content_home" />
 
 </navigation>

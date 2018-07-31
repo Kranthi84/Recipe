@@ -1,5 +1,7 @@
 package com.recipe.kchinnak.searchrecipe
 
+import android.app.Activity
+import android.content.Context
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,6 +12,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.recipe.kchinnak.searchrecipe.FirebaseUtils.AuthenticationUtil
 import com.recipe.kchinnak.searchrecipe.Utils.DialogUtil
@@ -23,6 +26,7 @@ class MainFragment : Fragment() {
     }
 
     private val mAuth = AuthenticationUtil.instance.mFirebaseAuth
+    private var mListener: SignedUser? = null
 
     private lateinit var viewModel: MainViewModel
 
@@ -43,6 +47,7 @@ class MainFragment : Fragment() {
             username.setText(userEmail)
         }
 
+        mAuth?.currentUser?.let { mListener?.let { it.preSignedin() } }
 
     }
 
@@ -62,7 +67,7 @@ class MainFragment : Fragment() {
                 mAuth?.signInWithEmailAndPassword(email, password)?.addOnCompleteListener {
                     if (it.isSuccessful) {
                         if (mAuth?.currentUser!!.isEmailVerified)
-                            view?.let { Navigation.findNavController(it).navigate(R.id.home_fragment) }
+                            view?.let { Navigation.findNavController(it).navigate(R.id.drawer_layout) }
                         else {
                             var mDialog = DialogUtil(context, activity?.layoutInflater)
                             mDialog.mVerifyEmailAlertDialog.show()
@@ -103,10 +108,23 @@ class MainFragment : Fragment() {
 
             }
         }
-
-
     }
 
-    
+    override fun onAttach(activity: Activity?) {
+        super.onAttach(activity)
+        if (activity is MainActivity)
+            mListener = activity
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if (context is MainActivity) {
+            mListener = context
+        }
+    }
+
+    interface SignedUser {
+        fun preSignedin()
+    }
 
 }

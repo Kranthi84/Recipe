@@ -1,12 +1,19 @@
 package com.recipe.kchinnak.searchrecipe
 
+
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.Navigation
-import com.recipe.kchinnak.searchrecipe.MainFragment
-import com.recipe.kchinnak.searchrecipe.fragments.SignupFragment
+import com.recipe.kchinnak.searchrecipe.fragments.HomeFragment
 
-class MainActivity : AppCompatActivity() {
+
+class MainActivity : AppCompatActivity(), MainFragment.SignedUser {
+
+    override fun preSignedin() {
+        var homeIntent: Intent = Intent(this, HomeActivity::class.java)
+        startActivity(homeIntent)
+    }
 
     companion object {
         var USERTAG = MainActivity::class.simpleName
@@ -16,7 +23,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
     }
-
 
 
 }

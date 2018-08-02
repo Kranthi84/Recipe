@@ -4,8 +4,6 @@ package com.recipe.kchinnak.searchrecipe
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.navigation.Navigation
-import com.recipe.kchinnak.searchrecipe.fragments.HomeFragment
 
 
 class MainActivity : AppCompatActivity(), MainFragment.SignedUser {

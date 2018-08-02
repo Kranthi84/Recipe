@@ -9,10 +9,18 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
+import com.google.android.material.tabs.TabLayout
+import com.recipe.kchinnak.searchrecipe.adapters.HomePagerAdapter
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.app_bar_home.*
+import kotlinx.android.synthetic.main.content_home.*
+import kotlinx.android.synthetic.main.content_home.view.*
 
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    lateinit var mHomePagerAdapter: FragmentPagerAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +34,13 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
+
+        mHomePagerAdapter = HomePagerAdapter(supportFragmentManager, this)
+        viewPager.adapter = mHomePagerAdapter
+        tabLayout.setupWithViewPager(viewPager)
+
         nav_view.setNavigationItemSelectedListener(this)
+
     }
 
     override fun onBackPressed() {

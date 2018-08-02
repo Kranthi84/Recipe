@@ -9,17 +9,17 @@ import android.view.ViewGroup
 
 import com.recipe.kchinnak.searchrecipe.R
 
-class HomeFragment : Fragment() {
+class TrendingFragment : Fragment() {
 
     companion object {
-        fun newInstance() = HomeFragment()
+        fun newInstance() = TrendingFragment()
     }
 
     private lateinit var viewModel: HomeViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.home_fragment, container, false)
+        return inflater.inflate(R.layout.trending_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

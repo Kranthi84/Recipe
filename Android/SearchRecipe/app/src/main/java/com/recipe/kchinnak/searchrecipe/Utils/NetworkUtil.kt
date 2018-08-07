@@ -1,10 +1,18 @@
 package com.recipe.kchinnak.searchrecipe.Utils
 
 import android.content.Context
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.util.concurrent.TimeUnit
 
 class NetworkUtil private constructor() {
+
+
+    lateinit var okhttpBuilder: OkHttpClient.Builder
+    lateinit var logInterceptor: HttpLoggingInterceptor
+    var mRetrofit: Retrofit? = null
 
 
     private object Holder {
@@ -16,12 +24,26 @@ class NetworkUtil private constructor() {
     }
 
 
-    fun retrofitBuilder(mContext: Context): Retrofit {
+    fun retrofitBuilder(url: String?): Retrofit? {
 
-        return Retrofit.Builder()
-                .baseUrl(ConfigUtil().getConfigValue(mContext, "base_url"))
-                .addConverterFactory(MoshiConverterFactory.create())
-                .build()
+        okhttpBuilder = OkHttpClient.Builder()
+        logInterceptor = HttpLoggingInterceptor()
+        logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+        okhttpBuilder.addInterceptor(logInterceptor)
+        okhttpBuilder.connectTimeout(1, TimeUnit.MINUTES)
+        okhttpBuilder.readTimeout(1, TimeUnit.MINUTES)
+
+
+        url.let {
+            mRetrofit = Retrofit.Builder()
+                    .baseUrl(url)
+                    .addConverterFactory(MoshiConverterFactory.create())
+                    .client(okhttpBuilder.build())
+                    .build()
+        }
+
+        return mRetrofit
+
     }
 
 

@@ -1,24 +1,41 @@
 package com.recipe.kchinnak.searchrecipe.BeanClasses
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
+
 
 
 class Recipe {
 
-    @Json(name = "publisher")
-    private val publisher: String? = null
-    @Json(name = "f2f_url")
-    private val f2fUrl: String? = null
-    @Json(name = "title")
-    private val title: String? = null
-    @Json(name = "source_url")
-    private val sourceUrl: String? = null
-    @Json(name = "recipe_id")
-    private val recipeId: String? = null
-    @Json(name = "image_url")
-    private val imageUrl: String? = null
-    @Json(name = "social_rank")
-    private val socialRank: Double? = null
-    @Json(name = "publisher_url")
-    private val publisherUrl: String? = null
+    @SerializedName("publisher")
+    @Expose
+    var publisher: String? = null
+
+    @SerializedName("f2f_url")
+    @Expose
+    var f2fUrl: String? = null
+
+    @SerializedName("title")
+    @Expose
+    var title: String? = null
+
+    @SerializedName("source_url")
+    @Expose
+    var sourceUrl: String? = null
+
+    @SerializedName("recipe_id")
+    @Expose
+    var recipeId: String? = null
+
+    @SerializedName("image_url")
+    @Expose
+    var imageUrl: String? = null
+
+    @SerializedName("social_rank")
+    @Expose
+    var socialRank: Double? = null
+
+    @SerializedName("publisher_url")
+    @Expose
+    var publisherUrl: String? = null
 }

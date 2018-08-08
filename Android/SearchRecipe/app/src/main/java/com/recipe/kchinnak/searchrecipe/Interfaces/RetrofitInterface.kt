@@ -7,6 +7,6 @@ import retrofit2.http.Query
 
 interface RetrofitInterface {
 
-    @GET
+    @GET("api/search")
     fun getRecipes(@Query("key") key: String?): Observable<RecipesList>
 }

@@ -1,13 +1,20 @@
 package com.recipe.kchinnak.searchrecipe.BeanClasses
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
+
 
 
 
 class RecipesList {
 
-    @Json(name = "count")
-    private val count: Int? = null
-    @Json(name = "recipes")
-    private val recipes: List<Recipe>? = null
+    @SerializedName("count")
+    @Expose
+    var count: Int? = null
+
+    @SerializedName("recipes")
+    @Expose
+    var recipes: List<Recipe>? = null
+
+
 }

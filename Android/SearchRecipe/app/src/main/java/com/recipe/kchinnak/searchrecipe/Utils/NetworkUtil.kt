@@ -1,10 +1,11 @@
 package com.recipe.kchinnak.searchrecipe.Utils
 
 import android.content.Context
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class NetworkUtil private constructor() {
@@ -37,7 +38,8 @@ class NetworkUtil private constructor() {
         url.let {
             mRetrofit = Retrofit.Builder()
                     .baseUrl(url)
-                    .addConverterFactory(MoshiConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .client(okhttpBuilder.build())
                     .build()
         }

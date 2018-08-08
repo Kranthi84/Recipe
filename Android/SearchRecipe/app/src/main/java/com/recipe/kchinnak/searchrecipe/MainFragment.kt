@@ -67,7 +67,7 @@ class MainFragment : Fragment() {
                 mAuth?.signInWithEmailAndPassword(email, password)?.addOnCompleteListener {
                     if (it.isSuccessful) {
                         if (mAuth?.currentUser!!.isEmailVerified)
-                            view?.let { Navigation.findNavController(it).navigate(R.id.drawer_layout) }
+                            view?.let { Navigation.findNavController(it).navigate(R.id.homeActivity) }
                         else {
                             var mDialog = DialogUtil(context, activity?.layoutInflater)
                             mDialog.mVerifyEmailAlertDialog.show()

@@ -9,8 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.recipe.kchinnak.searchrecipe.R
-
-
+import com.recipe.kchinnak.searchrecipe.RxJavaPresenter
 
 
 class TopratedFragment : Fragment() {
@@ -26,6 +25,10 @@ class TopratedFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_toprated, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        RxJavaPresenter(context!!).getRecipes()
+    }
 
     companion object {
 

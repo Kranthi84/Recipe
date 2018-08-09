@@ -1,5 +1,6 @@
 package com.recipe.kchinnak.searchrecipe.BeanClasses
 
+
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -38,4 +39,5 @@ class Recipe {
     @SerializedName("publisher_url")
     @Expose
     var publisherUrl: String? = null
+
 }

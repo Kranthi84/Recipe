@@ -2,9 +2,7 @@ package com.recipe.kchinnak.searchrecipe
 
 import androidx.lifecycle.ViewModel
 import com.recipe.kchinnak.searchrecipe.DatabaseClasses.ImplementRecipeDataSource
-import com.recipe.kchinnak.searchrecipe.DatabaseClasses.RecipeDataSource
 import com.recipe.kchinnak.searchrecipe.DatabaseClasses.RecipeRoom
-import io.reactivex.Completable
 import io.reactivex.Flowable
 
 class RecipeViewModel(recipeDatasource: ImplementRecipeDataSource) : ViewModel() {
@@ -27,6 +25,16 @@ class RecipeViewModel(recipeDatasource: ImplementRecipeDataSource) : ViewModel()
         return mRecipeDataSource.getRecipe(mRecipeId)
     }
 
+    fun insertSingleRecipe(mRecipeRoom: RecipeRoom) {
 
+        mRecipeDataSource.insertOrUpdateRecipe(mRecipeRoom)
+
+    }
+
+    fun insertMultipleRecipes(mRecipeList: List<RecipeRoom>) {
+
+        mRecipeDataSource.insertMultipleRecipes(mRecipeList)
+
+    }
 
 }

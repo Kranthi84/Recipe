@@ -5,6 +5,7 @@ import io.reactivex.Flowable
 
 class ImplementRecipeDataSource(mDaoAccess: DaoAccess) : RecipeDataSource {
 
+
     private val mDaoAccess: DaoAccess
 
     init {
@@ -15,11 +16,17 @@ class ImplementRecipeDataSource(mDaoAccess: DaoAccess) : RecipeDataSource {
         return mDaoAccess.fetchRecipeById(recipe_id)
     }
 
+    override fun insertMultipleRecipes(listOfRecipes: List<RecipeRoom>) {
+
+        mDaoAccess.insertMultipleRecipes(listOfRecipes)
+    }
+
     override fun insertOrUpdateRecipe(recipe: RecipeRoom) {
 
 
         mDaoAccess.insertOneRecipe(recipe)
     }
+
 
     override fun deleteRecipe(recipe: RecipeRoom) {
         mDaoAccess.deleteRecipe(recipe)

@@ -9,6 +9,8 @@ interface RecipeDataSource {
 
     fun insertOrUpdateRecipe(recipe: RecipeRoom)
 
+    fun insertMultipleRecipes(listOfRecipes: List<RecipeRoom>)
+
     fun deleteRecipe(recipe: RecipeRoom)
 
     fun deleteAllRecipes()

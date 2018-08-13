@@ -1,28 +1,28 @@
 package com.recipe.kchinnak.searchrecipe.DatabaseClasses
 
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.recipe.kchinnak.searchrecipe.BeanClasses.Recipe
 import io.reactivex.Flowable
 
 
 interface DaoAccess {
 
-    @Insert
-    fun insertOneRecipe(recipe: Recipe)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertOneRecipe(recipe: RecipeRoom)
 
-    @Insert
-    fun insertMultipleRecipes(recipesList: List<Recipe>)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertMultipleRecipes(recipesList: List<RecipeRoom>)
 
-    @Query("SELECT * FROM RecipeRoom WHERE _recipe_id = :recipeId")
-    fun fetchRecipeById(recipeId: Int): Flowable<Recipe>
+    @Query("SELECT * FROM recipe WHERE recipe_id = :recipeId")
+    fun fetchRecipeById(recipeId: Int): Flowable<RecipeRoom>
+
+    @Query("DELETE FROM recipe")
+    fun deleteRecipes()
 
     @Update
-    fun updateRecipe(recipe: Recipe)
+    fun updateRecipe(recipe: RecipeRoom)
 
     @Delete
-    fun deleteRecipe(recipe: Recipe)
+    fun deleteRecipe(recipe: RecipeRoom)
 
 }

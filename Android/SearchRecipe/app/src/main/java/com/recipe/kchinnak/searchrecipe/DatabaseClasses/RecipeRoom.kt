@@ -50,7 +50,7 @@ class RecipeRoom(recipe_id: String, publisher: String, f2fUrl: String, title: St
         this._sourceUrl = sourceUrl
     }
 
-    fun getRecipeId(): String{
+    fun getRecipeId(): String {
         return _recipe_id
     }
 

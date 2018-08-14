@@ -17,11 +17,12 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class RecipeDaoTest {
 
-    @Rule @JvmField
+    @Rule
+    @JvmField
     val instanceTaskExecuteRule = InstantTaskExecutorRule()
 
     companion object {
-        private var recipe: RecipeRoom = RecipeRoom("1", "publisher", "f2fUrl", "title", "sourceUrl", "imageUrl", 1.0, "publisherUrl")
+        private lateinit var recipeR: RecipeRoom
     }
 
     private var mDatabase: RecipeDatbase? = null
@@ -41,17 +42,18 @@ class RecipeDaoTest {
     @Test
     fun insertAndGetRecipe() {
 
-        mDatabase?.recipeDao()?.insertOneRecipe(recipe)
-        mDatabase?.recipeDao()!!.fetchRecipeById(recipeId = recipe.getRecipeId().toInt()).test()
+        mDatabase?.recipeDao()?.insertOneRecipe(RecipeRoom("1", "pub", "f2f", "Title", "SrcUrl", "ImageUrl", 1.0, "pubUrl"))
+        mDatabase?.recipeDao()!!.fetchRecipeById(recipeId = 1).test()
                 .assertValue() {
-                    it.getRecipeId().toInt() == recipe.getRecipeId().toInt()
+                    it.getRecipeId().toInt() == 1
                 }
     }
 
     @Test
     fun deleteAndGetRecipe() {
-        mDatabase?.recipeDao()!!.deleteRecipe(recipe)
-        mDatabase?.recipeDao()!!.fetchRecipeById(recipe.getRecipeId().toInt()).test()
+
+        mDatabase?.recipeDao()!!.deleteRecipe(RecipeRoom("1", "pub", "f2f", "Title", "SrcUrl", "ImageUrl", 1.0, "pubUrl"))
+        mDatabase?.recipeDao()!!.fetchRecipeById(recipeR.getRecipeId().toInt()).test()
                 .assertNoValues()
     }
 }

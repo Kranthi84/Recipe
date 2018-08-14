@@ -4,7 +4,7 @@ import androidx.room.*
 import com.recipe.kchinnak.searchrecipe.BeanClasses.Recipe
 import io.reactivex.Flowable
 
-
+@Dao
 interface DaoAccess {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -4,6 +4,8 @@
     <!-- Config Properties Strings -->
     <string name="base_url">base_url</string>
     <string name="api_key">api_key</string>
+    <string name="sort">sort</string>
+    <string name="key">key</string>
 
     <!-- Login and SignUp Screens -->
     <string name="login_button">login</string>

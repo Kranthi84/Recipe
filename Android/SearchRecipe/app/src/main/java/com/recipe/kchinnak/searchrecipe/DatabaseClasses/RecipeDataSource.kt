@@ -17,4 +17,10 @@ interface RecipeDataSource {
 
     fun deleteAllRecipes()
 
+    fun getTrendingRecipeList(): Flowable<List<TrendingRecipeRoom>>
+
+    fun insertMultipleTrendingRecipes(listOfTrendingRecipes: List<TrendingRecipeRoom>)
+
+    fun deleteAllTrendingRecipes()
+
 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.recipe.kchinnak.searchrecipe.BeanClasses.RecipesList
 import com.recipe.kchinnak.searchrecipe.DatabaseClasses.*
 import com.recipe.kchinnak.searchrecipe.fragments.TopratedFragment
+import com.recipe.kchinnak.searchrecipe.fragments.TrendingFragment
 import io.reactivex.observers.DisposableObserver
 
 class RxJavaDisposableObserver(mFragment: Fragment) : DisposableObserver<RecipesList>() {
@@ -14,7 +15,7 @@ class RxJavaDisposableObserver(mFragment: Fragment) : DisposableObserver<Recipes
     private val TAG = RxJavaDisposableObserver::class.java.simpleName
     private var fragment: Fragment = mFragment
     private var mRecipeDataSource: ImplementRecipeDataSource? = null
-    private var ratedRecipeInterface: ViewModelInterface = mFragment as TopratedFragment
+    private var recipeInterface: ViewModelInterface
     private var recipeRoomList: ArrayList<RecipeRoom>
 
 
@@ -22,6 +23,11 @@ class RxJavaDisposableObserver(mFragment: Fragment) : DisposableObserver<Recipes
         var mDatabase = RecipeDatbase.getInstance(fragment.context!!)
         mRecipeDataSource = ImplementRecipeDataSource(mDatabase!!.recipeDao())
         recipeRoomList = ArrayList()
+        if(fragment is TopratedFragment){
+            recipeInterface = fragment as TopratedFragment
+        }else{
+            recipeInterface = fragment as TrendingFragment
+        }
 
     }
 
@@ -37,7 +43,7 @@ class RxJavaDisposableObserver(mFragment: Fragment) : DisposableObserver<Recipes
             recipeRoomList.add(recipeRoom)
         }
 
-        ratedRecipeInterface.updatedRecipeList(recipeRoomList)
+        recipeInterface.updatedRecipeList(recipeRoomList)
     }
 
     override fun onError(e: Throwable) {

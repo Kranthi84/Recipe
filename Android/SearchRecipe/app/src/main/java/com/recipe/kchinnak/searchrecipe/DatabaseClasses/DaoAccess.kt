@@ -27,4 +27,13 @@ interface DaoAccess {
     @Delete
     fun deleteRecipe(recipe: RecipeRoom)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertMultipleTrendingRecipes(recipesList: List<TrendingRecipeRoom>)
+
+    @Query("SELECT * FROM trending")
+    fun fetchAllTrendingRecipes(): Flowable<List<TrendingRecipeRoom>>
+
+    @Query("DELETE from trending")
+    fun deleteTrendingRecipes()
+
 }

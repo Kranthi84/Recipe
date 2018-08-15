@@ -4,8 +4,21 @@ import io.reactivex.Flowable
 
 class ImplementRecipeDataSource(mDaoAccess: DaoAccess) : RecipeDataSource {
 
-
     private val mDaoAccess: DaoAccess = mDaoAccess
+
+    override fun getTrendingRecipeList(): Flowable<List<TrendingRecipeRoom>> {
+        return mDaoAccess.fetchAllTrendingRecipes()
+    }
+
+    override fun insertMultipleTrendingRecipes(listOfTrendingRecipes: List<TrendingRecipeRoom>) {
+        mDaoAccess.insertMultipleTrendingRecipes(listOfTrendingRecipes)
+    }
+
+    override fun deleteAllTrendingRecipes() {
+        mDaoAccess.deleteTrendingRecipes()
+    }
+
+
 
     override fun getRecipeList(): Flowable<List<RecipeRoom>> {
         return mDaoAccess.fetchAllRecipes()
@@ -16,13 +29,10 @@ class ImplementRecipeDataSource(mDaoAccess: DaoAccess) : RecipeDataSource {
     }
 
     override fun insertMultipleRecipes(listOfRecipes: List<RecipeRoom>) {
-
         mDaoAccess.insertMultipleRecipes(listOfRecipes)
     }
 
     override fun insertOrUpdateRecipe(recipe: RecipeRoom) {
-
-
         mDaoAccess.insertOneRecipe(recipe)
     }
 

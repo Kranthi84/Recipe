@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.recipe.kchinnak.searchrecipe.DatabaseClasses.ImplementRecipeDataSource
 import com.recipe.kchinnak.searchrecipe.DatabaseClasses.RecipeDataSource
 import com.recipe.kchinnak.searchrecipe.DatabaseClasses.RecipeRoom
+import com.recipe.kchinnak.searchrecipe.DatabaseClasses.TrendingRecipeRoom
 import io.reactivex.Completable
 import io.reactivex.Flowable
 
@@ -16,6 +17,8 @@ class RecipeViewModel(recipeDatasource: RecipeDataSource) : ViewModel() {
     private var mRecipe: RecipeRoom? = null
 
     private var roomRecipeList: ArrayList<RecipeRoom>? = null
+
+    private var trendingRecipeList: ArrayList<TrendingRecipeRoom>? = null
 
     var mRecipeLiveData: MutableLiveData<ArrayList<RecipeRoom>>
 
@@ -53,6 +56,20 @@ class RecipeViewModel(recipeDatasource: RecipeDataSource) : ViewModel() {
 
         return Completable.fromAction {
             mRecipeDataSource.insertMultipleRecipes(mRecipeList)
+        }
+    }
+
+    fun insertMultipleTrendingRecipes(mTrendingRecipeList: List<TrendingRecipeRoom>): Completable {
+
+        return Completable.fromAction {
+            mRecipeDataSource.insertMultipleTrendingRecipes(mTrendingRecipeList)
+        }
+    }
+
+    fun getAllTrendingRecipes(): Flowable<List<TrendingRecipeRoom>> {
+        return mRecipeDataSource.getTrendingRecipeList().map {
+            this.trendingRecipeList = it as ArrayList<TrendingRecipeRoom>
+            return@map this.trendingRecipeList
         }
     }
 

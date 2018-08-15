@@ -18,20 +18,31 @@ import java.math.MathContext
 
 
 class RxJavaPresenter(mFragment: Fragment) : RecipeInterface {
+    override fun getTrendingRecipes() {
+        getObservable('t').subscribeWith(getObserver())
+    }
+
+    override fun getTopRatedRecipes() {
+        getObservable('r').subscribeWith(getObserver())
+    }
 
     private var mFragment: Fragment = mFragment
     private var mRetrofit: Retrofit? = null
 
-
-
-    override fun getRecipes() {
-        getObservable().subscribeWith(getObserver())
-    }
-
-    private fun getObservable(): Observable<RecipesList> {
+    private fun getObservable(category: Char): Observable<RecipesList> {
         var mNetworkUtil = NetworkUtil.instance
+        var queryMap: HashMap<String, String> = HashMap()
+
+        var api_key: String = mFragment.getString(R.string.key)
+        var api_key_Value: String = ConfigUtil().getConfigValue(mFragment.context!!, mFragment.getString(R.string.api_key))!!
+        var sort_key: String = mFragment.getString(R.string.sort)
+        var sort_value = category
+
+        queryMap.put(api_key, api_key_Value)
+        queryMap.put(sort_key, sort_value.toString())
+
         mRetrofit = mNetworkUtil.retrofitBuilder(ConfigUtil().getConfigValue(mFragment.context!!, mFragment.getString(R.string.base_url)))
-        return mRetrofit.let { mRetrofit?.create(RetrofitInterface::class.java)?.getRecipes(ConfigUtil().getConfigValue(mFragment.context!!, mFragment.getString(R.string.api_key))) }!!
+        return mRetrofit.let { mRetrofit?.create(RetrofitInterface::class.java)?.getSortedRecipes(queryMap) }!!
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }

@@ -30,10 +30,17 @@ class RecipeViewModel(recipeDatasource: RecipeDataSource) : ViewModel() {
 
         return mRecipeDataSource.getRecipe(mRecipeId).map { mRecipeRoom ->
             this.mRecipe = mRecipeRoom
-            return@map mRecipe
+            return@map this.mRecipe
         }
 
         //return mRecipeDataSource.getRecipe(mRecipeId)
+    }
+
+    fun getAllRecipes(): Flowable<List<RecipeRoom>> {
+        return mRecipeDataSource.getRecipeList().map {
+            this.roomRecipeList = it as ArrayList<RecipeRoom>
+            return@map this.roomRecipeList
+        }
     }
 
     fun insertSingleRecipe(mRecipeRoom: RecipeRoom) {
@@ -47,12 +54,6 @@ class RecipeViewModel(recipeDatasource: RecipeDataSource) : ViewModel() {
         return Completable.fromAction {
             mRecipeDataSource.insertMultipleRecipes(mRecipeList)
         }
-    }
-
-    fun setUpRecipeRoomArray(mRecipeList: ArrayList<RecipeRoom>) {
-        this.roomRecipeList = mRecipeList
-
-
     }
 
 

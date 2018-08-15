@@ -1,7 +1,6 @@
 package com.recipe.kchinnak.searchrecipe.DatabaseClasses
 
 import androidx.room.*
-import com.recipe.kchinnak.searchrecipe.BeanClasses.Recipe
 import io.reactivex.Flowable
 
 @Dao
@@ -15,6 +14,9 @@ interface DaoAccess {
 
     @Query("SELECT * FROM recipe WHERE recipe_id = :recipeId")
     fun fetchRecipeById(recipeId: Int): Flowable<RecipeRoom>
+
+    @Query("SELECT * FROM recipe")
+    fun fetchAllRecipes(): Flowable<List<RecipeRoom>>
 
     @Query("DELETE FROM recipe")
     fun deleteRecipes()

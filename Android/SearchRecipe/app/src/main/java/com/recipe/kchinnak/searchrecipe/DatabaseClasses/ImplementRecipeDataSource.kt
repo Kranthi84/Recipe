@@ -1,15 +1,14 @@
 package com.recipe.kchinnak.searchrecipe.DatabaseClasses
 
-import com.recipe.kchinnak.searchrecipe.BeanClasses.Recipe
 import io.reactivex.Flowable
 
 class ImplementRecipeDataSource(mDaoAccess: DaoAccess) : RecipeDataSource {
 
 
-    private val mDaoAccess: DaoAccess
+    private val mDaoAccess: DaoAccess = mDaoAccess
 
-    init {
-        this.mDaoAccess = mDaoAccess
+    override fun getRecipeList(): Flowable<List<RecipeRoom>> {
+        return mDaoAccess.fetchAllRecipes()
     }
 
     override fun getRecipe(recipe_id: Int): Flowable<RecipeRoom> {

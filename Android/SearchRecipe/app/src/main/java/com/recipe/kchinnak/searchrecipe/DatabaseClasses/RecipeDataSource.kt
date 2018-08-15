@@ -7,6 +7,8 @@ interface RecipeDataSource {
 
     fun getRecipe(recipe_id: Int): Flowable<RecipeRoom>
 
+    fun getRecipeList(): Flowable<List<RecipeRoom>>
+
     fun insertOrUpdateRecipe(recipe: RecipeRoom)
 
     fun insertMultipleRecipes(listOfRecipes: List<RecipeRoom>)

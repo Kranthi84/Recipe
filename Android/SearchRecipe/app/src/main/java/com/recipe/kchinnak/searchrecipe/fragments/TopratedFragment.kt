@@ -31,9 +31,9 @@ class TopratedFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
     private lateinit var mRecipeAdapter: RecipeAdapter
 
 
-    override fun updatedRecipeList(mRecipeRoomList: ArrayList<RecipeRoom>) {
+    override fun updatedRecipeList(mRecipeRoomList: ArrayList<Any>) {
 
-        mDisposable.add(mRecipeViewModel.insertMultipleRecipes(mRecipeRoomList).subscribeOn(Schedulers.io())
+        mDisposable.add(mRecipeViewModel.insertMultipleRecipes(mRecipeRoomList as ArrayList<RecipeRoom>).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe())
 

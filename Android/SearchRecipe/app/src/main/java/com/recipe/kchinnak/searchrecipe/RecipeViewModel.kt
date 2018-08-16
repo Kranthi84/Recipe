@@ -21,11 +21,13 @@ class RecipeViewModel(recipeDatasource: RecipeDataSource) : ViewModel() {
     private var trendingRecipeList: ArrayList<TrendingRecipeRoom>? = null
 
     var mRecipeLiveData: MutableLiveData<ArrayList<RecipeRoom>>
+    var mTrendingRecipeLiveData: MutableLiveData<ArrayList<TrendingRecipeRoom>>
 
     init {
         this.mRecipeDataSource = recipeDatasource
         roomRecipeList = ArrayList()
         mRecipeLiveData = MutableLiveData()
+        mTrendingRecipeLiveData = MutableLiveData()
     }
 
 

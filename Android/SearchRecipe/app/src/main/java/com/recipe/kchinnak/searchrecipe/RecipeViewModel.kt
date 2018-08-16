@@ -3,6 +3,7 @@ package com.recipe.kchinnak.searchrecipe
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.room.migration.Migration
 import com.recipe.kchinnak.searchrecipe.DatabaseClasses.ImplementRecipeDataSource
 import com.recipe.kchinnak.searchrecipe.DatabaseClasses.RecipeDataSource
 import com.recipe.kchinnak.searchrecipe.DatabaseClasses.RecipeRoom
@@ -73,6 +74,14 @@ class RecipeViewModel(recipeDatasource: RecipeDataSource) : ViewModel() {
             this.trendingRecipeList = it as ArrayList<TrendingRecipeRoom>
             return@map this.trendingRecipeList
         }
+    }
+
+    fun deleteAllTrendingRecipes() {
+        mRecipeDataSource.deleteAllTrendingRecipes()
+    }
+
+    fun deleteAllTopRatedRecipes() {
+        mRecipeDataSource.deleteAllRecipes()
     }
 
 

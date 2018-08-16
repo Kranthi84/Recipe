@@ -49,12 +49,6 @@ class RxJavaDisposableObserver(mFragment: Fragment) : DisposableObserver<Recipes
             recipeList.add(recipeObject)
         }
 
-        mRecipeDataSource?.apply {
-            if (fragment is TopratedFragment)
-                this?.deleteAllRecipes()
-            else
-                this?.deleteAllTrendingRecipes()
-        }
         recipeInterface.updatedRecipeList(recipeList)
     }
 

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.recipe.kchinnak.searchrecipe.*
 import com.recipe.kchinnak.searchrecipe.DatabaseClasses.Injection
 import com.recipe.kchinnak.searchrecipe.DatabaseClasses.TrendingRecipeRoom
@@ -19,6 +20,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.layout_recycler_view_recipe.*
 import kotlinx.android.synthetic.main.trending_fragment.*
 import java.util.*
 
@@ -37,7 +39,7 @@ class TrendingFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
             mRecipeModel.deleteAllTrendingRecipes()
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe{
+                .subscribe {
                     mDisposable.add(mRecipeModel.insertMultipleTrendingRecipes(mRecipeTrendingList as ArrayList<TrendingRecipeRoom>)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
@@ -51,15 +53,11 @@ class TrendingFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
                 }
 
 
-
-
     }
 
     companion object {
         fun newInstance() = TrendingFragment()
     }
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,6 +81,21 @@ class TrendingFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
             trending_recycler_view.adapter = mRecipeAdapter
             mRecipeAdapter.notifyDataSetChanged()
 
+        })
+
+        trending_recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1)) {
+                    loadmore_text.visibility = View.VISIBLE
+                }
+            }
+
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+            }
         })
     }
 

@@ -51,7 +51,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
             moveTaskToBack(true)
-
         }
     }
 

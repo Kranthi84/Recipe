@@ -48,6 +48,7 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
     implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:support-compat:27.1.1'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     //implementation 'com.squareup.retrofit2:converter-moshi:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
@@ -57,45 +58,35 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.squareup.picasso:picasso:2.71828'
-
     def room_version = "2.0.0-beta01"
-
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version" // use kapt for Kotlin
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    // use kapt for Kotlin
     kapt "androidx.room:room-compiler:$room_version"
-
     // optional - RxJava support for Room
     implementation "androidx.room:room-rxjava2:$room_version"
-
     // optional - Guava support for Room, including Optional and ListenableFuture
     implementation "androidx.room:room-guava:$room_version"
-
     // Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
-
-
-
     testImplementation deps.hamcrest
     testImplementation deps.arch_core.testing
     testImplementation deps.mockito.all
-
     // Resolve conflicts between main and local unit tests
     testImplementation deps.support.annotations
     testImplementation deps.support.core_utils
-
     // Android Testing Support Library's runner and rules
     androidTestImplementation deps.atsl.runner
     androidTestImplementation deps.atsl.rules
     androidTestImplementation deps.room.testing
     androidTestImplementation deps.arch_core.testing
-
     // Dependencies for Android unit tests
     androidTestImplementation deps.junit
     androidTestImplementation deps.mockito.core, { exclude group: 'net.bytebuddy' }
     androidTestImplementation deps.dexmaker
-
     // Espresso UI Testing
     androidTestImplementation deps.espresso.core
     androidTestImplementation deps.espresso.contrib
     androidTestImplementation deps.espresso.intents
+
 }

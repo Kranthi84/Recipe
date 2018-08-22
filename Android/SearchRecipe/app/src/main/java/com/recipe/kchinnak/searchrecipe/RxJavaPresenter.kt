@@ -17,19 +17,22 @@ import retrofit2.Retrofit
 import java.math.MathContext
 
 
-class RxJavaPresenter(mFragment: Fragment) : RecipeInterface {
+class RxJavaPresenter(mFragment: Fragment, pIndex: Int) : RecipeInterface {
+
+
     override fun getTrendingRecipes() {
-        getObservable('t').subscribeWith(getObserver())
+        getObservable('t', this.pageIndex).subscribeWith(getObserver())
     }
 
     override fun getTopRatedRecipes() {
-        getObservable('r').subscribeWith(getObserver())
+        getObservable('r', this.pageIndex).subscribeWith(getObserver())
     }
 
     private var mFragment: Fragment = mFragment
     private var mRetrofit: Retrofit? = null
+    private var pageIndex: Int = pIndex
 
-    private fun getObservable(category: Char): Observable<RecipesList> {
+    private fun getObservable(category: Char, pageIndex: Int): Observable<RecipesList> {
         var mNetworkUtil = NetworkUtil.instance
         var queryMap: HashMap<String, String> = HashMap()
 
@@ -37,6 +40,7 @@ class RxJavaPresenter(mFragment: Fragment) : RecipeInterface {
         var api_key_Value: String = ConfigUtil().getConfigValue(mFragment.context!!, mFragment.getString(R.string.api_key))!!
         var sort_key: String = mFragment.getString(R.string.sort)
         var sort_value = category
+        var page_key: String = mFragment.getString(R.string.page)
 
         queryMap.put(api_key, api_key_Value)
         queryMap.put(sort_key, sort_value.toString())

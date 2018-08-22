@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorButtontext">#FFFFFF</color>
     <color name="activityBackground">#2ad2cdcd</color>
+    <color name="progressbar_background">#8FD81B60</color>
 </resources>

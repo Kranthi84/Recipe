@@ -6,6 +6,7 @@
     <string name="api_key">api_key</string>
     <string name="sort">sort</string>
     <string name="key">key</string>
+    <string name="page">page</string>
 
     <!-- Login and SignUp Screens -->
     <string name="login_button">login</string>

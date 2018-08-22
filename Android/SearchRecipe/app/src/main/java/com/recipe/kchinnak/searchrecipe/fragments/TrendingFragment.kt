@@ -20,6 +20,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.content_home.*
 import kotlinx.android.synthetic.main.layout_recycler_view_recipe.*
 import kotlinx.android.synthetic.main.trending_fragment.*
 import java.util.*
@@ -89,6 +90,8 @@ class TrendingFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1)) {
                     loadmore_text.visibility = View.VISIBLE
+                } else {
+                    if (loadmore_text.visibility == View.VISIBLE) loadmore_text.visibility = View.GONE
                 }
             }
 
@@ -96,6 +99,12 @@ class TrendingFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
             }
+        })
+
+
+        loadmore_text.setOnClickListener({
+            progressBar.visibility = View.VISIBLE
+
         })
     }
 

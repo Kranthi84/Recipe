@@ -41,9 +41,11 @@ class RxJavaPresenter(mFragment: Fragment, pIndex: Int) : RecipeInterface {
         var sort_key: String = mFragment.getString(R.string.sort)
         var sort_value = category
         var page_key: String = mFragment.getString(R.string.page)
+        var page_value: Int = pageIndex
 
         queryMap.put(api_key, api_key_Value)
         queryMap.put(sort_key, sort_value.toString())
+        queryMap.put(page_key, page_value.toString())
 
         mRetrofit = mNetworkUtil.retrofitBuilder(ConfigUtil().getConfigValue(mFragment.context!!, mFragment.getString(R.string.base_url)))
         return mRetrofit.let { mRetrofit?.create(RetrofitInterface::class.java)?.getSortedRecipes(queryMap) }!!

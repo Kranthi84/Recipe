@@ -2,6 +2,8 @@ package com.recipe.kchinnak.searchrecipe
 
 
 import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 
 import com.recipe.kchinnak.searchrecipe.BeanClasses.RecipesList
@@ -34,6 +36,7 @@ class RxJavaDisposableObserver(mFragment: Fragment) : DisposableObserver<Recipes
 
     override fun onComplete() {
         Log.d(TAG, "Observer task completed.")
+        fragment.activity!!.findViewById<ProgressBar>(R.id.progressBar).visibility = View.GONE
     }
 
     override fun onNext(t: RecipesList) {

@@ -4,6 +4,7 @@ import android.app.Application
 
 class RecipeApplication : Application() {
 
-    public var pageIndex: Int? = null
+    var trendingPageIndex: Int? = 1
+    var topRatedPageIndex: Int? = 1
 
 }

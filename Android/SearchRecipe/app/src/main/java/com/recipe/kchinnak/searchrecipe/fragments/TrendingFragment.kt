@@ -1,12 +1,15 @@
 package com.recipe.kchinnak.searchrecipe.fragments
 
 import android.annotation.SuppressLint
+import android.app.Application
+import android.app.SearchManager
+import android.content.Context
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.widget.ProgressBar
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -32,12 +35,16 @@ class TrendingFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
     private lateinit var mRecipeModel: RecipeViewModel
     private lateinit var mRecipeModelFactory: ViewModelFactory
     private lateinit var mRecipeAdapter: TrendingRecipeAdapter
+    private lateinit var mSearchManager: SearchManager
+    private lateinit var mSearchView: SearchView
+    private var mPage: Int? = null
 
     @SuppressLint("CheckResult")
     override fun updatedRecipeList(mRecipeTrendingList: ArrayList<Any>) {
 
         Observable.fromCallable {
-            mRecipeModel.deleteAllTrendingRecipes()
+            if (mPage == 1)
+                mRecipeModel.deleteAllTrendingRecipes()
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
@@ -61,10 +68,32 @@ class TrendingFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
     }
 
 
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater!!.inflate(R.menu.home, menu)
+
+        mSearchManager = activity!!.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        mSearchView = menu!!.findItem(R.id.search_view).actionView as SearchView
+        mSearchView.setSearchableInfo(mSearchManager.getSearchableInfo(activity!!.componentName))
+        mSearchView.maxWidth = Integer.MAX_VALUE
+
+        mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+        })
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mRecipeModelFactory = Injection.getRecipeViewModelFactory(context!!)
         mRecipeModel = ViewModelProviders.of(this, mRecipeModelFactory).get(RecipeViewModel::class.java)
+        mPage = (activity!!.application as RecipeApplication).trendingPageIndex
 
     }
 
@@ -77,11 +106,9 @@ class TrendingFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
         super.onViewCreated(view, savedInstanceState)
         trending_recycler_view.layoutManager = LinearLayoutManager(context)
         mRecipeModel.mTrendingRecipeLiveData.observe(this, Observer {
-
             mRecipeAdapter = TrendingRecipeAdapter(it, context!!)
             trending_recycler_view.adapter = mRecipeAdapter
             mRecipeAdapter.notifyDataSetChanged()
-
         })
 
         trending_recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -94,23 +121,22 @@ class TrendingFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
                     if (loadmore_text.visibility == View.VISIBLE) loadmore_text.visibility = View.GONE
                 }
             }
+        })
 
 
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
+        loadmore_text.setOnClickListener {
+            (activity!!.findViewById<ProgressBar>(R.id.progressBar) as ProgressBar).visibility = View.VISIBLE
+            mPage.let {
+                mPage = it!! + 1
+                RxJavaPresenter(this, mPage!!).getTrendingRecipes()
             }
-        })
-
-
-        loadmore_text.setOnClickListener({
-            progressBar.visibility = View.VISIBLE
-
-        })
+        }
     }
 
     override fun onStart() {
         super.onStart()
-        RxJavaPresenter(this).getTrendingRecipes()
+        mPage.let {
+            RxJavaPresenter(this, it!!).getTrendingRecipes()
+        }
     }
-
 }

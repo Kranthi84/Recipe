@@ -7,9 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.recipe.kchinnak.searchrecipe.*
 import com.recipe.kchinnak.searchrecipe.DatabaseClasses.Injection
 import com.recipe.kchinnak.searchrecipe.DatabaseClasses.RecipeRoom
@@ -18,6 +20,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.content_home.*
 import kotlinx.android.synthetic.main.fragment_toprated.*
 
 
@@ -29,13 +32,15 @@ class TopratedFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
     private lateinit var mRecipeViewModel: RecipeViewModel
     private lateinit var mViewModelFactory: ViewModelFactory
     private lateinit var mRecipeAdapter: RecipeAdapter
+    private var mPage: Int? = null
 
 
     @SuppressLint("CheckResult")
     override fun updatedRecipeList(mRecipeRoomList: ArrayList<Any>) {
 
         Observable.fromCallable {
-            mRecipeViewModel.deleteAllTopRatedRecipes()
+            if (mPage == 1)
+                mRecipeViewModel.deleteAllTopRatedRecipes()
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
@@ -52,29 +57,33 @@ class TopratedFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
 
                 }
 
-       /* mDisposable.add(mRecipeViewModel.insertMultipleRecipes(mRecipeRoomList as ArrayList<RecipeRoom>).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe())
+        /* mDisposable.add(mRecipeViewModel.insertMultipleRecipes(mRecipeRoomList as ArrayList<RecipeRoom>).subscribeOn(Schedulers.io())
+                 .observeOn(AndroidSchedulers.mainThread())
+                 .subscribe())
 
-        mDisposable.add(mRecipeViewModel.getAllRecipes().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    mRecipeViewModel.mRecipeLiveData.value = it as ArrayList<RecipeRoom>
-                })*/
+         mDisposable.add(mRecipeViewModel.getAllRecipes().subscribeOn(Schedulers.io())
+                 .observeOn(AndroidSchedulers.mainThread())
+                 .subscribe {
+                     mRecipeViewModel.mRecipeLiveData.value = it as ArrayList<RecipeRoom>
+                 })*/
 
     }
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mViewModelFactory = Injection.getRecipeViewModelFactory(context!!)
         mRecipeViewModel = ViewModelProviders.of(this, mViewModelFactory).get(RecipeViewModel::class.java)
+        mPage = (activity!!.application as RecipeApplication).topRatedPageIndex
     }
 
     override fun onStart() {
         super.onStart()
-        RxJavaPresenter(this).getTopRatedRecipes()
+
+        mPage.let {
+            RxJavaPresenter(this, it!!).getTopRatedRecipes()
+        }
+
     }
 
     override fun onStop() {
@@ -96,6 +105,26 @@ class TopratedFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
             topRated_recycler_view.adapter = mRecipeAdapter
             mRecipeAdapter.notifyDataSetChanged()
         })
+
+        topRated_recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1)) {
+                    loadmore_text_toprated.visibility = View.VISIBLE
+                } else {
+                    if (loadmore_text_toprated.visibility == View.VISIBLE) loadmore_text_toprated.visibility = View.GONE
+                }
+            }
+        })
+
+        loadmore_text_toprated.setOnClickListener {
+            (activity!!.findViewById<ProgressBar>(R.id.progressBar) as ProgressBar).visibility = View.VISIBLE
+            mPage.let {
+                mPage = it!! + 1
+                RxJavaPresenter(this, mPage!!).getTopRatedRecipes()
+            }
+        }
     }
 
     companion object {

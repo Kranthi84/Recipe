@@ -2,12 +2,13 @@ package com.recipe.kchinnak.searchrecipe.fragments
 
 
 import android.annotation.SuppressLint
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ProgressBar
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,6 +33,8 @@ class TopratedFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
     private lateinit var mRecipeViewModel: RecipeViewModel
     private lateinit var mViewModelFactory: ViewModelFactory
     private lateinit var mRecipeAdapter: RecipeAdapter
+    private lateinit var mSearchView: SearchView
+    private lateinit var mSearchManager: SearchManager
     private var mPage: Int? = null
 
 
@@ -57,18 +60,29 @@ class TopratedFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
 
                 }
 
-        /* mDisposable.add(mRecipeViewModel.insertMultipleRecipes(mRecipeRoomList as ArrayList<RecipeRoom>).subscribeOn(Schedulers.io())
-                 .observeOn(AndroidSchedulers.mainThread())
-                 .subscribe())
-
-         mDisposable.add(mRecipeViewModel.getAllRecipes().subscribeOn(Schedulers.io())
-                 .observeOn(AndroidSchedulers.mainThread())
-                 .subscribe {
-                     mRecipeViewModel.mRecipeLiveData.value = it as ArrayList<RecipeRoom>
-                 })*/
 
     }
 
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater!!.inflate(R.menu.home, menu)
+
+        mSearchManager = activity!!.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        mSearchView = menu!!.findItem(R.id.search_view).actionView as SearchView
+        mSearchView.setSearchableInfo(mSearchManager.getSearchableInfo(activity!!.componentName))
+        mSearchView.maxWidth = Integer.MAX_VALUE
+
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == R.id.search_view) {
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

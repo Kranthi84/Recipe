@@ -34,7 +34,7 @@ class TrendingFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
     private var mDisposable: CompositeDisposable = CompositeDisposable()
     private lateinit var mRecipeModel: RecipeViewModel
     private lateinit var mRecipeModelFactory: ViewModelFactory
-    private lateinit var mRecipeAdapter: TrendingRecipeAdapter
+    private var mRecipeAdapter: TrendingRecipeAdapter? = null
     private lateinit var mSearchManager: SearchManager
     private lateinit var mSearchView: SearchView
     private var mPage: Int? = null
@@ -77,16 +77,24 @@ class TrendingFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
         mSearchView.setSearchableInfo(mSearchManager.getSearchableInfo(activity!!.componentName))
         mSearchView.maxWidth = Integer.MAX_VALUE
 
-        mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                mRecipeAdapter.let { it?.filter?.filter(query) }
+                return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                mRecipeAdapter.let { it?.filter?.filter(newText) }
+                return false
             }
 
         })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        if (item?.itemId == R.id.search_view) return true
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -108,7 +116,7 @@ class TrendingFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
         mRecipeModel.mTrendingRecipeLiveData.observe(this, Observer {
             mRecipeAdapter = TrendingRecipeAdapter(it, context!!)
             trending_recycler_view.adapter = mRecipeAdapter
-            mRecipeAdapter.notifyDataSetChanged()
+            mRecipeAdapter?.notifyDataSetChanged()
         })
 
         trending_recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {

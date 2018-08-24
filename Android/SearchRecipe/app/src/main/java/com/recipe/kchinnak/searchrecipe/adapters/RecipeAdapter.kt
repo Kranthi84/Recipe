@@ -17,11 +17,29 @@ class RecipeAdapter(recipes: List<RecipeRoom>, mContext: Context) : RecyclerView
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(p0: CharSequence?): FilterResults {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                var queryString = p0.toString()
+                if (queryString.isBlank()) {
+                    mFilteredList = mRecipeList
+                } else {
+                    var filteredList: ArrayList<RecipeRoom> = ArrayList<RecipeRoom>()
+                    for (rRoom in mRecipeList) {
+                        var rRoomTitle = rRoom._title
+                        rRoomTitle.let {
+                            if (it!!.contains(queryString, true)) filteredList.add(rRoom)
+                        }
+                    }
+
+                    mFilteredList = filteredList
+                }
+
+                var mFilterResults: FilterResults = FilterResults()
+                mFilterResults.values = mFilterResults
+                return mFilterResults
             }
 
             override fun publishResults(p0: CharSequence?, p1: FilterResults?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                mFilteredList = p1?.values as ArrayList<RecipeRoom>
+                notifyDataSetChanged()
             }
 
         }
@@ -30,7 +48,7 @@ class RecipeAdapter(recipes: List<RecipeRoom>, mContext: Context) : RecyclerView
 
     private var context = mContext
     private var mRecipeList = recipes as ArrayList<RecipeRoom>
-    private var mFilteredList = recipes as ArrayList<RecipeRoom>
+    private var mFilteredList = mRecipeList
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
@@ -40,12 +58,12 @@ class RecipeAdapter(recipes: List<RecipeRoom>, mContext: Context) : RecyclerView
     }
 
     override fun getItemCount(): Int {
-        return mRecipeList.size
+        return mFilteredList.size
     }
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
-        holder.tvTitle.text = mRecipeList.get(position)._title
-        Picasso.get().load(mRecipeList.get(position)._imageUrl).into(holder.recipeImageView)
+        holder.tvTitle.text = mFilteredList.get(position)._title
+        Picasso.get().load(mFilteredList.get(position)._imageUrl).into(holder.recipeImageView)
     }
 
 

@@ -32,7 +32,7 @@ class TopratedFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
     private var mDisposable: CompositeDisposable = CompositeDisposable()
     private lateinit var mRecipeViewModel: RecipeViewModel
     private lateinit var mViewModelFactory: ViewModelFactory
-    private lateinit var mRecipeAdapter: RecipeAdapter
+    private var mRecipeAdapter: RecipeAdapter? = null
     private lateinit var mSearchView: SearchView
     private lateinit var mSearchManager: SearchManager
     private var mPage: Int? = null
@@ -73,6 +73,18 @@ class TopratedFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
         mSearchView.setSearchableInfo(mSearchManager.getSearchableInfo(activity!!.componentName))
         mSearchView.maxWidth = Integer.MAX_VALUE
 
+        mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                mRecipeAdapter.let { it?.filter?.filter(query) }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                mRecipeAdapter.let { it?.filter?.filter(newText) }
+                return false
+            }
+
+        })
 
     }
 
@@ -117,7 +129,7 @@ class TopratedFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
         mRecipeViewModel.mRecipeLiveData.observe(this, Observer {
             mRecipeAdapter = RecipeAdapter(it, context!!)
             topRated_recycler_view.adapter = mRecipeAdapter
-            mRecipeAdapter.notifyDataSetChanged()
+            mRecipeAdapter!!.notifyDataSetChanged()
         })
 
         topRated_recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {

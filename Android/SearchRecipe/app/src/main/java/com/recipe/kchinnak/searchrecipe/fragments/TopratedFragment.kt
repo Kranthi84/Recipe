@@ -2,6 +2,7 @@ package com.recipe.kchinnak.searchrecipe.fragments
 
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
@@ -33,9 +34,10 @@ class TopratedFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
     private lateinit var mRecipeViewModel: RecipeViewModel
     private lateinit var mViewModelFactory: ViewModelFactory
     private var mRecipeAdapter: RecipeAdapter? = null
-    private lateinit var mSearchView: SearchView
-    private lateinit var mSearchManager: SearchManager
+   /* private lateinit var mSearchView: SearchView
+    private lateinit var mSearchManager: SearchManager*/
     private var mPage: Int? = null
+    private lateinit var mTopRInterface: TopRatedInterface
 
 
     @SuppressLint("CheckResult")
@@ -64,7 +66,7 @@ class TopratedFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
     }
 
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+   /* override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater!!.inflate(R.menu.home, menu)
 
@@ -86,15 +88,15 @@ class TopratedFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
 
         })
 
-    }
+    }*/
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+   /* override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item?.itemId == R.id.search_view) {
             return true
         }
 
         return super.onOptionsItemSelected(item)
-    }
+    }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -130,6 +132,7 @@ class TopratedFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
             mRecipeAdapter = RecipeAdapter(it, context!!)
             topRated_recycler_view.adapter = mRecipeAdapter
             mRecipeAdapter!!.notifyDataSetChanged()
+            mTopRInterface.exposeAdapter(mRecipeAdapter!!)
         })
 
         topRated_recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -151,9 +154,29 @@ class TopratedFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
                 RxJavaPresenter(this, mPage!!).getTopRatedRecipes()
             }
         }
+
+
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if (context is HomeActivity) {
+            mTopRInterface = context as TopRatedInterface
+        }
+    }
+
+    override fun onAttach(activity: Activity?) {
+        super.onAttach(activity)
+        if (activity is HomeActivity) {
+            mTopRInterface = activity as TopRatedInterface
+        }
     }
 
     companion object {
         fun newInstance() = TopratedFragment()
+    }
+
+    interface TopRatedInterface {
+        fun exposeAdapter(mTopRatedAdapter: RecipeAdapter)
     }
 }

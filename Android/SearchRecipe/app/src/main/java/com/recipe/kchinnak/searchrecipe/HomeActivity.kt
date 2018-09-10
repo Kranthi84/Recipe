@@ -1,29 +1,128 @@
 package com.recipe.kchinnak.searchrecipe
 
-import android.content.Intent
+import android.app.SearchManager
+import android.content.Context
+
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
+
 import com.google.android.material.navigation.NavigationView
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TableLayout
+
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.google.android.material.tabs.TabLayout
+
 import com.recipe.kchinnak.searchrecipe.adapters.HomePagerAdapter
+import com.recipe.kchinnak.searchrecipe.adapters.RecipeAdapter
+import com.recipe.kchinnak.searchrecipe.adapters.TrendingRecipeAdapter
+import com.recipe.kchinnak.searchrecipe.fragments.TopratedFragment
+import com.recipe.kchinnak.searchrecipe.fragments.TrendingFragment
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.app_bar_home.*
 import kotlinx.android.synthetic.main.content_home.*
-import kotlinx.android.synthetic.main.content_home.view.*
 
-class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener, TopratedFragment.TopRatedInterface, TrendingFragment.TrendingInterface {
+
+
+    private var mTrAdapter: RecipeAdapter? = null
+    private var mTrendAdapter: TrendingRecipeAdapter? = null
+
+    override fun exposeTrendingAdapter(mTrendingAdapter: TrendingRecipeAdapter) {
+        this.mTrendAdapter = mTrendingAdapter
+    }
+
+    override fun exposeAdapter(mTopRatedAdapter: RecipeAdapter) {
+        this.mTrAdapter = mTopRatedAdapter
+    }
+
+
+    override fun onPageScrollStateChanged(state: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onPageSelected(position: Int) {
+        when (position) {
+            0 -> {
+                mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+
+                        mTrendAdapter.let {
+                            it?.filter?.filter(query)
+                        }
+                        return false
+                    }
+
+                    override fun onQueryTextChange(newText: String?): Boolean {
+                        mTrendAdapter.let { it?.filter?.filter(newText) }
+                        return false
+                    }
+
+                })
+            }
+            else -> {
+
+                mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+
+                        mTrAdapter.let {
+                            it?.filter?.filter(query)
+                        }
+
+                        return false
+                    }
+
+                    override fun onQueryTextChange(newText: String?): Boolean {
+
+                        mTrAdapter.let {
+                            it?.filter?.filter(newText)
+                        }
+
+                        return false
+                    }
+
+                })
+
+            }
+        }
+    }
+
+
+    private lateinit var mSearchView: SearchView
+    private lateinit var mSearchManager: SearchManager
 
     lateinit var mHomePagerAdapter: FragmentPagerAdapter
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.home, menu)
+
+        if (getSystemService(Context.SEARCH_SERVICE) is SearchManager) {
+            mSearchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        }
+
+
+
+        mSearchView = menu!!.findItem(R.id.search_view).actionView as SearchView
+        mSearchView.setSearchableInfo(mSearchManager.getSearchableInfo(componentName))
+        mSearchView.maxWidth = Integer.MAX_VALUE
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        if (item?.itemId == R.id.search_view) {
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,19 +153,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    /*override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.home, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return true
-
-    }*/
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.

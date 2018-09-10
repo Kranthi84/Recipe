@@ -1,6 +1,7 @@
 package com.recipe.kchinnak.searchrecipe.fragments
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Application
 import android.app.SearchManager
 import android.content.Context
@@ -35,8 +36,9 @@ class TrendingFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
     private lateinit var mRecipeModel: RecipeViewModel
     private lateinit var mRecipeModelFactory: ViewModelFactory
     private var mRecipeAdapter: TrendingRecipeAdapter? = null
-    private lateinit var mSearchManager: SearchManager
-    private lateinit var mSearchView: SearchView
+    /*private lateinit var mSearchManager: SearchManager
+    private lateinit var mSearchView: SearchView*/
+    private lateinit var mTrendingInterface: TrendingInterface
     private var mPage: Int? = null
 
     @SuppressLint("CheckResult")
@@ -68,7 +70,7 @@ class TrendingFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
     }
 
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    /*override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater!!.inflate(R.menu.home, menu)
 
@@ -89,13 +91,13 @@ class TrendingFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
             }
 
         })
-    }
+    }*/
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    /*override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
         if (item?.itemId == R.id.search_view) return true
         return super.onOptionsItemSelected(item)
-    }
+    }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -117,6 +119,7 @@ class TrendingFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
             mRecipeAdapter = TrendingRecipeAdapter(it, context!!)
             trending_recycler_view.adapter = mRecipeAdapter
             mRecipeAdapter?.notifyDataSetChanged()
+            mTrendingInterface.exposeTrendingAdapter(mRecipeAdapter!!)
         })
 
         trending_recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -139,6 +142,8 @@ class TrendingFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
                 RxJavaPresenter(this, mPage!!).getTrendingRecipes()
             }
         }
+
+
     }
 
     override fun onStart() {
@@ -146,5 +151,25 @@ class TrendingFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
         mPage.let {
             RxJavaPresenter(this, it!!).getTrendingRecipes()
         }
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if (context is HomeActivity) {
+            mTrendingInterface = context
+        }
+    }
+
+    override fun onAttach(activity: Activity?) {
+        super.onAttach(activity)
+
+        if (activity is HomeActivity) {
+            mTrendingInterface = activity
+        }
+
+    }
+
+    interface TrendingInterface {
+        fun exposeTrendingAdapter(mTrendingAdapter: TrendingRecipeAdapter)
     }
 }

@@ -42,57 +42,14 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
     override fun onPageScrollStateChanged(state: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onPageSelected(position: Int) {
-        when (position) {
-            0 -> {
-                mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                    override fun onQueryTextSubmit(query: String?): Boolean {
-
-                        mTrendAdapter.let {
-                            it?.filter?.filter(query)
-                        }
-                        return false
-                    }
-
-                    override fun onQueryTextChange(newText: String?): Boolean {
-                        mTrendAdapter.let { it?.filter?.filter(newText) }
-                        return false
-                    }
-
-                })
-            }
-            else -> {
-
-                mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                    override fun onQueryTextSubmit(query: String?): Boolean {
-
-                        mTrAdapter.let {
-                            it?.filter?.filter(query)
-                        }
-
-                        return false
-                    }
-
-                    override fun onQueryTextChange(newText: String?): Boolean {
-
-                        mTrAdapter.let {
-                            it?.filter?.filter(newText)
-                        }
-
-                        return false
-                    }
-
-                })
-
-            }
-        }
     }
 
 
@@ -113,6 +70,32 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mSearchView = menu!!.findItem(R.id.search_view).actionView as SearchView
         mSearchView.setSearchableInfo(mSearchManager.getSearchableInfo(componentName))
         mSearchView.maxWidth = Integer.MAX_VALUE
+
+        mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+
+                mTrendAdapter.let {
+                    it?.filter?.filter(query)
+                }
+
+                mTrAdapter.let {
+                    it?.filter?.filter(query)
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                mTrendAdapter.let { it?.filter?.filter(newText) }
+
+                mTrAdapter.let {
+                    it?.filter?.filter(newText)
+                }
+                return false
+            }
+
+        })
+
+
         return true
     }
 
@@ -138,6 +121,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         mHomePagerAdapter = HomePagerAdapter(supportFragmentManager, this)
         viewPager.adapter = mHomePagerAdapter
+        viewPager.addOnPageChangeListener(this)
         tabLayout.setupWithViewPager(viewPager)
 
         nav_view.setNavigationItemSelectedListener(this)

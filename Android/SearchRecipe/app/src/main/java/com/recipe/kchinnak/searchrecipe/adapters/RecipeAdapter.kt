@@ -33,7 +33,7 @@ class RecipeAdapter(recipes: List<RecipeRoom>, mContext: Context) : RecyclerView
                 }
 
                 var mFilterResults: FilterResults = FilterResults()
-                mFilterResults.values = mFilterResults
+                mFilterResults.values = mFilteredList
                 return mFilterResults
             }
 

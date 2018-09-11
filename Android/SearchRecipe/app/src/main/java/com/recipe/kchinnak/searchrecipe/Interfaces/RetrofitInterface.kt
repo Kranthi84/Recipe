@@ -9,7 +9,7 @@ import retrofit2.http.QueryMap
 interface RetrofitInterface {
 
 
-    @GET("api/searchable")
+    @GET("api/search")
     fun getSortedRecipes(@QueryMap(encoded = true) map: Map<String, String>): Observable<RecipesList>
 
 }

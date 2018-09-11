@@ -29,6 +29,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
+
     <!-- Home Screen -->
     <string name="trending_fragment_title">Trending</string>
     <string name="top_rated_fragment_title">Top Rated</string>
@@ -37,4 +38,8 @@
     <string name="load_more">load more..</string>
     <string name="search_view">search recipe</string>
     <string name="search_hint">Search Recipes </string>
+
+    <!-- Detailed Screen -->
+
+    <string name="detail_image_content">Detail Recipe Image</string>
 </resources>

@@ -42,4 +42,5 @@
     <!-- Detailed Screen -->
 
     <string name="detail_image_content">Detail Recipe Image</string>
+    <string name="ingredient_num">Ingredient #</string>
 </resources>

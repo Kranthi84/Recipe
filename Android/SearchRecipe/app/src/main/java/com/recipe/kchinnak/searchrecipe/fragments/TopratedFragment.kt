@@ -43,6 +43,7 @@ class TopratedFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
     @SuppressLint("CheckResult")
     override fun updatedRecipeList(mRecipeRoomList: ArrayList<Any>) {
 
+
         Observable.fromCallable {
             if (mPage == 1)
                 mRecipeViewModel.deleteAllTopRatedRecipes()
@@ -61,7 +62,6 @@ class TopratedFragment : Fragment(), RxJavaDisposableObserver.ViewModelInterface
                             })
 
                 }
-
 
     }
 

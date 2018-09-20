@@ -2,6 +2,7 @@ package com.recipe.kchinnak.searchrecipe.adapters
 
 import android.content.Context
 import android.text.Layout
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,7 +68,11 @@ class RecipeAdapter(recipes: List<RecipeRoom>, mContext: Context) : RecyclerView
     }
 
 
-    class RecipeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class RecipeViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
+        override fun onClick(p0: View?) {
+            Log.d("Debug", "Recycler view item is clicked.")
+        }
+
         private var mView = view
         val tvTitle = mView.textview_recipe_title
         val recipeImageView = mView.imageView_recipe

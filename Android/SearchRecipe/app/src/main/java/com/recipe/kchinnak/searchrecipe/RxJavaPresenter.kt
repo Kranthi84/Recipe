@@ -18,16 +18,12 @@ import java.math.MathContext
 
 
 class RxJavaPresenter(mFragment: Fragment, pIndex: Int) : RecipeInterface {
-
-
     override fun getTrendingRecipes() {
         getObservable('t', this.pageIndex).subscribeWith(getObserver())
     }
-
     override fun getTopRatedRecipes() {
         getObservable('r', this.pageIndex).subscribeWith(getObserver())
     }
-
     private var mFragment: Fragment = mFragment
     private var mRetrofit: Retrofit? = null
     private var pageIndex: Int = pIndex

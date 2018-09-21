@@ -31,10 +31,6 @@
             app:destination="@id/main" />
     </fragment>
 
-    <fragment
-        android:id="@+id/detail_fragment_layout"
-        android:name="com.recipe.kchinnak.searchrecipe.fragments.DetailFragment"
-        android:label="ThirdFragment"/>
 
 
     <activity

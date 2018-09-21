@@ -1,8 +1,7 @@
 package com.recipe.kchinnak.searchrecipe.adapters
 
 import android.content.Context
-import android.text.Layout
-import android.util.Log
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +9,14 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.recipe.kchinnak.searchrecipe.DatabaseClasses.RecipeRoom
+import com.recipe.kchinnak.searchrecipe.DetailActivity
+import com.recipe.kchinnak.searchrecipe.MainActivity
 import com.recipe.kchinnak.searchrecipe.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.layout_recycler_view_recipe.view.*
 
 class RecipeAdapter(recipes: List<RecipeRoom>, mContext: Context) : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>(), Filterable {
+
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(p0: CharSequence?): FilterResults {
@@ -46,10 +48,10 @@ class RecipeAdapter(recipes: List<RecipeRoom>, mContext: Context) : RecyclerView
         }
     }
 
-
     private var context = mContext
     private var mRecipeList = recipes as ArrayList<RecipeRoom>
     private var mFilteredList = mRecipeList
+    private var mIntent = Intent(context, DetailActivity::class.java)
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
@@ -65,17 +67,18 @@ class RecipeAdapter(recipes: List<RecipeRoom>, mContext: Context) : RecyclerView
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         holder.tvTitle.text = mFilteredList.get(position)._title
         Picasso.get().load(mFilteredList.get(position)._imageUrl).into(holder.recipeImageView)
+
+        var recipeRoom = mFilteredList.get(position)
+
+        mIntent.putExtra(MainActivity.USERTAG, recipeRoom.getRecipeId())
+
+        holder.recipeImageView.setOnClickListener { context.startActivity(mIntent) }
+        holder.tvTitle.setOnClickListener { context.startActivity(mIntent) }
     }
 
-
-    class RecipeViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
-        override fun onClick(p0: View?) {
-            Log.d("Debug", "Recycler view item is clicked.")
-        }
-
+    class RecipeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private var mView = view
         val tvTitle = mView.textview_recipe_title
         val recipeImageView = mView.imageView_recipe
     }
-
 }

@@ -8,8 +8,9 @@ import android.os.Bundle
 
 class MainActivity : AppCompatActivity(), MainFragment.SignedUser {
 
+
     override fun preSignedin() {
-        var homeIntent: Intent = Intent(this, HomeActivity::class.java)
+        var homeIntent = Intent(this, HomeActivity::class.java)
         startActivity(homeIntent)
     }
 
@@ -20,7 +21,7 @@ class MainActivity : AppCompatActivity(), MainFragment.SignedUser {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
-    }
 
+    }
 
 }

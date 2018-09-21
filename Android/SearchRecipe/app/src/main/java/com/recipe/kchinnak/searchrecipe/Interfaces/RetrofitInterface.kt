@@ -12,4 +12,6 @@ interface RetrofitInterface {
     @GET("api/search")
     fun getSortedRecipes(@QueryMap(encoded = true) map: Map<String, String>): Observable<RecipesList>
 
+    fun getRecipe(recipeId: String):Observable<>
+
 }

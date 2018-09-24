@@ -2,38 +2,49 @@ package com.recipe.kchinnak.searchrecipe
 
 import android.content.Context
 import androidx.fragment.app.Fragment
-import com.recipe.kchinnak.searchrecipe.BeanClasses.Recipe
+import com.recipe.kchinnak.searchrecipe.BeanClasses.DetailRecipe
 import com.recipe.kchinnak.searchrecipe.BeanClasses.RecipesList
 import com.recipe.kchinnak.searchrecipe.Interfaces.RecipeInterface
 import com.recipe.kchinnak.searchrecipe.Interfaces.RetrofitInterface
 import com.recipe.kchinnak.searchrecipe.Utils.ConfigUtil
 import com.recipe.kchinnak.searchrecipe.Utils.NetworkUtil
-import com.recipe.kchinnak.searchrecipe.fragments.TopratedFragment
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Retrofit
-import java.math.MathContext
 
 
-class RxJavaPresenter(mFragment: Fragment, pIndex: Int) : RecipeInterface {
+class RxJavaPresenter : RecipeInterface {
+
+    constructor(context: Context) {
+        this.mContext = context
+    }
+
+    constructor(mFragment: Fragment, pIndex: Int) {
+        this.mFragment = mFragment
+        pageIndex = pIndex
+    }
+
     override fun getTrendingRecipes() {
-        getObservable('t', this.pageIndex).subscribeWith(getObserver())
+        getMultipleRecipeObservable('t', this.pageIndex!!).subscribeWith(getMultipleRecipeObserver())
     }
+
     override fun getTopRatedRecipes() {
-        getObservable('r', this.pageIndex).subscribeWith(getObserver())
+        getMultipleRecipeObservable('r', this.pageIndex!!).subscribeWith(getMultipleRecipeObserver())
     }
-    private var mFragment: Fragment = mFragment
+
+    private lateinit var mContext: Context
+    private lateinit var mFragment: Fragment
+    private var pageIndex: Int? = null
     private var mRetrofit: Retrofit? = null
-    private var pageIndex: Int = pIndex
+    private var mNetworkUtil = NetworkUtil.instance
+    private var queryMap: HashMap<String, String> = HashMap()
+    var api_key: String = mFragment.getString(R.string.key)
+    var api_key_Value: String = ConfigUtil().getConfigValue(mFragment.context!!, mFragment.getString(R.string.api_key))!!
 
-    private fun getObservable(category: Char, pageIndex: Int): Observable<RecipesList> {
-        var mNetworkUtil = NetworkUtil.instance
-        var queryMap: HashMap<String, String> = HashMap()
+    private fun getMultipleRecipeObservable(category: Char, pageIndex: Int): Observable<RecipesList> {
 
-        var api_key: String = mFragment.getString(R.string.key)
-        var api_key_Value: String = ConfigUtil().getConfigValue(mFragment.context!!, mFragment.getString(R.string.api_key))!!
         var sort_key: String = mFragment.getString(R.string.sort)
         var sort_value = category
         var page_key: String = mFragment.getString(R.string.page)
@@ -49,7 +60,22 @@ class RxJavaPresenter(mFragment: Fragment, pIndex: Int) : RecipeInterface {
                 .observeOn(AndroidSchedulers.mainThread())
     }
 
-    private fun getObserver(): DisposableObserver<RecipesList> {
+    private fun getSingleRecipeObservable(recipeId: String): Observable<DetailRecipe> {
+
+        var recipeId_key = mContext.getString(R.string.recipe_id)
+
+        queryMap.put(recipeId_key, recipeId)
+
+        mRetrofit = mNetworkUtil.retrofitBuilder(ConfigUtil().getConfigValue(mFragment.context!!, mFragment.getString(R.string.base_url)))
+        return mRetrofit.let { mRetrofit?.create(RetrofitInterface::class.java)?.getRecipe(queryMap) }!!
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+
+    }
+
+    private fun getMultipleRecipeObserver(): DisposableObserver<RecipesList> {
         return RxJavaDisposableObserver(mFragment)
     }
+
+
 }

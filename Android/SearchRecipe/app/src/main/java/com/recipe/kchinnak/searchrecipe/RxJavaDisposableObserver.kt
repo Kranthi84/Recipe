@@ -1,10 +1,12 @@
 package com.recipe.kchinnak.searchrecipe
 
 
+import android.content.Context
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
+import com.recipe.kchinnak.searchrecipe.BeanClasses.DetailRecipe
 
 import com.recipe.kchinnak.searchrecipe.BeanClasses.RecipesList
 import com.recipe.kchinnak.searchrecipe.DatabaseClasses.*
@@ -13,13 +15,18 @@ import com.recipe.kchinnak.searchrecipe.fragments.TrendingFragment
 import io.reactivex.observers.DisposableObserver
 
 
-class RxJavaDisposableObserver(mFragment: Fragment) : DisposableObserver<RecipesList>() {
+class RxJavaDisposableObserver() : DisposableObserver<RecipesList>() {
 
     private val TAG = RxJavaDisposableObserver::class.java.simpleName
-    private var fragment: Fragment = mFragment
+    private lateinit var fragment: Fragment
     private var mRecipeDataSource: ImplementRecipeDataSource? = null
     private var recipeInterface: ViewModelInterface
     private var recipeList: ArrayList<Any>
+
+
+    constructor(mFragment: Fragment) : this() {
+        this.fragment = mFragment
+    }
 
 
     init {
@@ -31,7 +38,6 @@ class RxJavaDisposableObserver(mFragment: Fragment) : DisposableObserver<Recipes
         } else {
             fragment as TrendingFragment
         }
-
     }
 
     override fun onComplete() {

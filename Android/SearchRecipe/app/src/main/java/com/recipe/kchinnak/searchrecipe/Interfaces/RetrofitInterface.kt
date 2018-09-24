@@ -1,5 +1,6 @@
 package com.recipe.kchinnak.searchrecipe.Interfaces
 
+import com.recipe.kchinnak.searchrecipe.BeanClasses.DetailRecipe
 import com.recipe.kchinnak.searchrecipe.BeanClasses.RecipesList
 import io.reactivex.Observable
 import retrofit2.http.GET
@@ -12,6 +13,7 @@ interface RetrofitInterface {
     @GET("api/search")
     fun getSortedRecipes(@QueryMap(encoded = true) map: Map<String, String>): Observable<RecipesList>
 
-    fun getRecipe(recipeId: String):Observable<>
+    @GET("api/get")
+    fun getRecipe(@QueryMap(encoded = true) map: Map<String, String>): Observable<DetailRecipe>
 
 }

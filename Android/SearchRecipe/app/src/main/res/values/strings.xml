@@ -7,6 +7,8 @@
     <string name="sort">sort</string>
     <string name="key">key</string>
     <string name="page">page</string>
+    <string name="recipe_id">rId</string>
+
 
     <!-- Login and SignUp Screens -->
     <string name="login_button">login</string>

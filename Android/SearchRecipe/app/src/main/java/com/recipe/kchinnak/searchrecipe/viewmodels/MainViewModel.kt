@@ -1,4 +1,4 @@
-package com.recipe.kchinnak.searchrecipe
+package com.recipe.kchinnak.searchrecipe.viewmodels
 
 import androidx.lifecycle.ViewModel
 

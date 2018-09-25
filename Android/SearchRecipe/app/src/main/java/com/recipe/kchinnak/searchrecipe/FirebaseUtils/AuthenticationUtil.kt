@@ -1,4 +1,4 @@
-package com.recipe.kchinnak.searchrecipe.FirebaseUtils
+package com.recipe.kchinnak.searchrecipe.firebaseUtils
 
 import com.google.firebase.auth.FirebaseAuth
 

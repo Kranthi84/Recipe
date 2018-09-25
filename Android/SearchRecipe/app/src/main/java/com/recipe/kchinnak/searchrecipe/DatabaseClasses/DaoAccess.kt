@@ -1,4 +1,4 @@
-package com.recipe.kchinnak.searchrecipe.DatabaseClasses
+package com.recipe.kchinnak.searchrecipe.databaseClasses
 
 import androidx.room.*
 import io.reactivex.Flowable

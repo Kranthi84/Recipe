@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
-import com.recipe.kchinnak.searchrecipe.DatabaseClasses.RecipeRoom
-import com.recipe.kchinnak.searchrecipe.DetailActivity
-import com.recipe.kchinnak.searchrecipe.MainActivity
+import com.recipe.kchinnak.searchrecipe.databaseClasses.RecipeRoom
+import com.recipe.kchinnak.searchrecipe.activities.DetailActivity
+import com.recipe.kchinnak.searchrecipe.activities.MainActivity
 import com.recipe.kchinnak.searchrecipe.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.layout_recycler_view_recipe.view.*

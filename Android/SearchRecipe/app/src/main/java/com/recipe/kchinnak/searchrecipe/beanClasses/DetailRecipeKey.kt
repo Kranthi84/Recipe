@@ -3,18 +3,10 @@ package com.recipe.kchinnak.searchrecipe.beanClasses
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
+class DetailRecipeKey {
 
-
-
-class RecipesList {
-
-    @SerializedName("count")
+    @SerializedName("recipe")
     @Expose
-    var count: Int? = null
-
-    @SerializedName("recipes")
-    @Expose
-    var recipes: List<Recipe>? = null
-
+    var recipe: DetailRecipe? = null
 
 }

@@ -14,10 +14,10 @@ import androidx.navigation.Navigation
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
-import com.recipe.kchinnak.searchrecipe.FirebaseUtils.AuthenticationUtil
-import com.recipe.kchinnak.searchrecipe.MainActivity
+import com.recipe.kchinnak.searchrecipe.firebaseUtils.AuthenticationUtil
+import com.recipe.kchinnak.searchrecipe.activities.MainActivity
 import com.recipe.kchinnak.searchrecipe.R
-import com.recipe.kchinnak.searchrecipe.Utils.DialogUtil
+import com.recipe.kchinnak.searchrecipe.utils.DialogUtil
 
 
 class SignupFragment : Fragment() {

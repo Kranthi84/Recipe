@@ -1,8 +1,7 @@
-package com.recipe.kchinnak.searchrecipe.DatabaseClasses
+package com.recipe.kchinnak.searchrecipe.databaseClasses
 
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
-import com.recipe.kchinnak.searchrecipe.ViewModelFactory
+import com.recipe.kchinnak.searchrecipe.viewmodels.ViewModelFactory
 
 class Injection {
 

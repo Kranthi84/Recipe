@@ -1,12 +1,9 @@
-package com.recipe.kchinnak.searchrecipe.DatabaseClasses
+package com.recipe.kchinnak.searchrecipe.databaseClasses
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.migration.Migration
-import androidx.room.util.TableInfo
-import androidx.sqlite.db.SupportSQLiteDatabase
 
 
 @Database(entities = arrayOf(RecipeRoom::class, TrendingRecipeRoom::class), version = 2)

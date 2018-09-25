@@ -1,4 +1,4 @@
-package com.recipe.kchinnak.searchrecipe
+package com.recipe.kchinnak.searchrecipe.activities
 
 import android.app.SearchManager
 import android.content.Context
@@ -15,6 +15,7 @@ import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.recipe.kchinnak.searchrecipe.R
 
 import com.recipe.kchinnak.searchrecipe.adapters.HomePagerAdapter
 import com.recipe.kchinnak.searchrecipe.adapters.RecipeAdapter

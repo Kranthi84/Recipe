@@ -1,4 +1,4 @@
-package com.recipe.kchinnak.searchrecipe.DatabaseClasses
+package com.recipe.kchinnak.searchrecipe.databaseClasses
 
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo

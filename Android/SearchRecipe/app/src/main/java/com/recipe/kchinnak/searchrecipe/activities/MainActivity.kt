@@ -1,9 +1,11 @@
-package com.recipe.kchinnak.searchrecipe
+package com.recipe.kchinnak.searchrecipe.activities
 
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.recipe.kchinnak.searchrecipe.fragments.MainFragment
+import com.recipe.kchinnak.searchrecipe.R
 
 
 class MainActivity : AppCompatActivity(), MainFragment.SignedUser {

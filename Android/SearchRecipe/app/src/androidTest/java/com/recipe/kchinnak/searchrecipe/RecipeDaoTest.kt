@@ -5,8 +5,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
-import com.recipe.kchinnak.searchrecipe.DatabaseClasses.RecipeDatbase
-import com.recipe.kchinnak.searchrecipe.DatabaseClasses.RecipeRoom
+import com.recipe.kchinnak.searchrecipe.databaseClasses.RecipeDatbase
+import com.recipe.kchinnak.searchrecipe.databaseClasses.RecipeRoom
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -53,7 +53,7 @@ class RecipeDaoTest {
     fun deleteAndGetRecipe() {
 
         mDatabase?.recipeDao()!!.deleteRecipe(RecipeRoom("1", "pub", "f2f", "Title", "SrcUrl", "ImageUrl", 1.0, "pubUrl"))
-        mDatabase?.recipeDao()!!.fetchRecipeById(recipeR.getRecipeId().toInt()).test()
+        mDatabase?.recipeDao()!!.fetchRecipeById(1).test()
                 .assertNoValues()
     }
 }

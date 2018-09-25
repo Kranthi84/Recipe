@@ -7,11 +7,9 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
-import com.recipe.kchinnak.searchrecipe.DatabaseClasses.RecipeRoom
-import com.recipe.kchinnak.searchrecipe.DatabaseClasses.TrendingRecipeRoom
+import com.recipe.kchinnak.searchrecipe.databaseClasses.TrendingRecipeRoom
 import com.recipe.kchinnak.searchrecipe.R
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.layout_recycler_view_recipe.view.*
 
 class TrendingRecipeAdapter(recipes: List<TrendingRecipeRoom>, mContext: Context) : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>(), Filterable {
     override fun getFilter(): Filter {

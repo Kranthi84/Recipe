@@ -2,30 +2,29 @@ package com.recipe.kchinnak.searchrecipe.fragments
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.Application
-import android.app.SearchManager
 import android.content.Context
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.ProgressBar
-import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.recipe.kchinnak.searchrecipe.*
-import com.recipe.kchinnak.searchrecipe.DatabaseClasses.Injection
-import com.recipe.kchinnak.searchrecipe.DatabaseClasses.TrendingRecipeRoom
-import com.recipe.kchinnak.searchrecipe.adapters.RecipeAdapter
+import com.recipe.kchinnak.searchrecipe.databaseClasses.Injection
+import com.recipe.kchinnak.searchrecipe.databaseClasses.TrendingRecipeRoom
+import com.recipe.kchinnak.searchrecipe.activities.HomeActivity
 import com.recipe.kchinnak.searchrecipe.adapters.TrendingRecipeAdapter
+import com.recipe.kchinnak.searchrecipe.rxjavafiles.RxJavaDisposableObserver
+import com.recipe.kchinnak.searchrecipe.rxjavafiles.RxJavaPresenter
+import com.recipe.kchinnak.searchrecipe.viewmodels.RecipeViewModel
+import com.recipe.kchinnak.searchrecipe.viewmodels.ViewModelFactory
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.content_home.*
-import kotlinx.android.synthetic.main.layout_recycler_view_recipe.*
 import kotlinx.android.synthetic.main.trending_fragment.*
 import java.util.*
 

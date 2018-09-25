@@ -1,13 +1,11 @@
-package com.recipe.kchinnak.searchrecipe
+package com.recipe.kchinnak.searchrecipe.viewmodels
 
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.room.migration.Migration
-import com.recipe.kchinnak.searchrecipe.DatabaseClasses.ImplementRecipeDataSource
-import com.recipe.kchinnak.searchrecipe.DatabaseClasses.RecipeDataSource
-import com.recipe.kchinnak.searchrecipe.DatabaseClasses.RecipeRoom
-import com.recipe.kchinnak.searchrecipe.DatabaseClasses.TrendingRecipeRoom
+import com.recipe.kchinnak.searchrecipe.databaseClasses.RecipeDataSource
+import com.recipe.kchinnak.searchrecipe.databaseClasses.RecipeRoom
+import com.recipe.kchinnak.searchrecipe.databaseClasses.TrendingRecipeRoom
 import io.reactivex.Completable
 import io.reactivex.Flowable
 

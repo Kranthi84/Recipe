@@ -1,32 +1,29 @@
-package com.recipe.kchinnak.searchrecipe
+package com.recipe.kchinnak.searchrecipe.rxjavafiles
 
 
-import android.content.Context
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
-import com.recipe.kchinnak.searchrecipe.BeanClasses.DetailRecipe
 
-import com.recipe.kchinnak.searchrecipe.BeanClasses.RecipesList
-import com.recipe.kchinnak.searchrecipe.DatabaseClasses.*
+import com.recipe.kchinnak.searchrecipe.beanClasses.RecipesList
+import com.recipe.kchinnak.searchrecipe.databaseClasses.*
+import com.recipe.kchinnak.searchrecipe.R
 import com.recipe.kchinnak.searchrecipe.fragments.TopratedFragment
 import com.recipe.kchinnak.searchrecipe.fragments.TrendingFragment
 import io.reactivex.observers.DisposableObserver
 
 
-class RxJavaDisposableObserver() : DisposableObserver<RecipesList>() {
+class RxJavaDisposableObserver(mFragment: Fragment) : DisposableObserver<RecipesList>() {
 
     private val TAG = RxJavaDisposableObserver::class.java.simpleName
-    private lateinit var fragment: Fragment
+    private var fragment: Fragment = mFragment
     private var mRecipeDataSource: ImplementRecipeDataSource? = null
     private var recipeInterface: ViewModelInterface
     private var recipeList: ArrayList<Any>
 
 
-    constructor(mFragment: Fragment) : this() {
-        this.fragment = mFragment
-    }
+
 
 
     init {

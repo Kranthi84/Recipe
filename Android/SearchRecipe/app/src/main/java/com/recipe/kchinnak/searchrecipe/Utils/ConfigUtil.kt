@@ -1,4 +1,4 @@
-package com.recipe.kchinnak.searchrecipe.Utils
+package com.recipe.kchinnak.searchrecipe.utils
 
 import android.content.Context
 import android.content.res.Resources

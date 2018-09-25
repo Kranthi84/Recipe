@@ -1,4 +1,4 @@
-package com.recipe.kchinnak.searchrecipe.BeanClasses
+package com.recipe.kchinnak.searchrecipe.beanClasses
 
 
 import com.google.gson.annotations.Expose

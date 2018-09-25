@@ -1,4 +1,4 @@
-package com.recipe.kchinnak.searchrecipe
+package com.recipe.kchinnak.searchrecipe.fragments
 
 import android.app.Activity
 import android.content.Context
@@ -12,11 +12,11 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
-import com.google.firebase.auth.FirebaseAuth
-import com.recipe.kchinnak.searchrecipe.FirebaseUtils.AuthenticationUtil
-import com.recipe.kchinnak.searchrecipe.Utils.DialogUtil
-import com.recipe.kchinnak.searchrecipe.fragments.SignupFragment
+import com.recipe.kchinnak.searchrecipe.firebaseUtils.AuthenticationUtil
+import com.recipe.kchinnak.searchrecipe.viewmodels.MainViewModel
+import com.recipe.kchinnak.searchrecipe.R
+import com.recipe.kchinnak.searchrecipe.utils.DialogUtil
+import com.recipe.kchinnak.searchrecipe.activities.MainActivity
 import kotlinx.android.synthetic.main.login_fragment.*
 
 class MainFragment : Fragment() {
